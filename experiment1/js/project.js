@@ -52,14 +52,14 @@ function main() {
   });
 
   const template = `
-  Name: $name
-  Eye Color: $eye
-  Fur Color: $color
-  Fur Pattern: $pattern
-  Fur Texture/Coat: $texture
-  Tail Type: $tail
-  Ear Placement: $ears
-
+  Name: $name\n
+  Eye Color: $eye\n
+  Fur Color: $color\n
+  Fur Pattern: $pattern\n
+  Fur Texture/Coat: $texture\n
+  Tail Type: $tail\n
+  Ear Placement: $ears\n
+  \n
   They $verb a(n) $noun and become $adj.
   `;
 
