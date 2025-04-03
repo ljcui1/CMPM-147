@@ -61,7 +61,7 @@ function main() {
   Ear Placement: $ears\n
   \n
   They $verb a(n) $noun and become $adj.
-  `;
+  `.trim();
 
 
   // STUDENTS: You don't need to edit code below this line.
