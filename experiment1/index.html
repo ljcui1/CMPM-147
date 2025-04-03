@@ -24,19 +24,24 @@
     <script type="text/javascript" src="../js/site.js" DEFER></script>
 	<!-- Use me for a JavaScript OOP Project -->
 	<script type="text/javascript" src="./js/project.js" DEFER></script>
-	<!-- Use me for a p5.js project -->
-	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+	
 </head>
 <body>
 	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
 	<main id="content">
 		<section>
 
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1>Experiment 01 - Getting Started/Rat Generator</h1>
 
 			<div class="minor-section">
 				<div id="canvas-container">
-					<!-- canvas will be added here -->
+					<button id="clicker">
+						regenerate rat
+					  </button>
+					  <div
+						style="font-family: helvetica; border: thin solid gray; padding: 1em; margin: 1em; box-shadow: 2px 2px 5px gray; background: #ffe;"
+						id="box"
+					  ></div>
 				</div>
                 <div class="fullscreen-box">
                     <button id="fullscreen">Fullscreen</button>
@@ -45,17 +50,17 @@
 
 			<div class="minor-section">
 				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+				<p>I wanted to make a mostly comprehensive pet fancy rat generator that can eventually be expanded to create a graphical depiction of the generated rat.</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<p>I pulled dog names from a library called dog-names, and filled in information in the filler matrix for the other attributes of rats sourced from websites that compiled physical attribute and breeding information of fancy rats. I then set up a template variable that would display the following information and an action that the rat did.</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+				<p>I worked on this project by myself using the glitch.com template provided by Professor Wes Modes. The parts I edited include the information and the format that randomized information is displayed. I also added a portion of code that pulled JSON files from an online library and picked a random name from the JSON files. I wanted to do something technically interesting for this project compared to the project's basic requirements and I knew that dog names would likely be an accessible resource for me to pull from instead of needing to brainstorm names myself. I had some problems with trying to figure out how to import the library via a browser-based JS compiler/editor and discovered that import isn’t viable due to a restriction caused by something called CORS. I instead needed to fetch the information from a website called jsdelivr but ran into another problem when displaying the fetched information which would output as “Promise”. This required me to “promise.all” the information to actually use it and for it to display properly. The extra steps I took helped me understand more about libraries and retrieval of information over the web. </p>
 			</div>
 
 		</section>
