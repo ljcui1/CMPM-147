@@ -34,9 +34,17 @@ function resizeScreen() {
   // redrawCanvas(); // Redraw everything based on new size
 }
 
-// setup() function is called once when the program starts
+/* exported setup, draw, mousePressed */
+let seed = 0;
+
+let lightLines = [];
+let driftSpeed = 0.3;
+
+let tileBuffer;
+
+let ripples = [];
+
 function setup() {
-  // place our canvas, making it fit our container
   canvasContainer = $("#canvas-container");
   let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
   canvas.parent("canvas-container");
@@ -49,31 +57,137 @@ function setup() {
     resizeScreen();
   });
   resizeScreen();
+  noFill();
+  let regen = createButton("reimagine").mousePressed(() => {seed++; regenerateScene();});
+  regen.parent("canvas-container");
+  regenerateScene();
 }
 
-// draw() function is called repeatedly, it's the main animation loop
+function regenerateScene() {
+  lightLines = [];
+  randomSeed(seed); // Apply seed before generating tiles
+  tileBuffer = createGraphics(width, height);
+  backTile(tileBuffer);
+  randomSeed(seed); // Re-apply seed to get consistent light shape positions
+  lineAmt();
+}
+
 function draw() {
-  background(220);    
-  // call a method on the instance
-  myInstance.myMethod();
+  background(100);
+  
+  //make background tiles into a graphic
+  image(tileBuffer, 0, 0);
+  
+  randomSeed(seed);
+  for (let shape of lightLines) {
+    let xOffset = sin(frameCount * 0.01) * driftSpeed; // Horizontal drift using sin
+    shape.x += xOffset;
+    
+    // Draw each shape with drift effect
+    whiteLines(shape.x, shape.y, shape.size);
+  }
+  
+  //draw each ripple
+  for (let i = ripples.length - 1; i >= 0; i--) {
+    let r = ripples[i];
+    stroke(0, 150, 255, r.alpha); // Blue with transparency
+    strokeWeight(4);
+    ellipse(r.x, r.y, r.radius * 2);
 
-  // Set up rotation for the rectangle
-  push(); // Save the current drawing context
-  translate(centerHorz, centerVert); // Move the origin to the rectangle's center
-  rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
-  fill(234, 31, 81);
-  noStroke();
-  rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
-  pop(); // Restore the original drawing context
+    r.radius += 2;
+    r.alpha -= 2;
 
-  // The text is not affected by the translate and rotate
-  fill(255);
-  textStyle(BOLD);
-  textSize(140);
-  text("p5*", centerHorz - 105, centerVert + 40);
+    // remove if fully transparent
+    if (r.alpha <= 0) {
+      ripples.splice(i, 1);
+    }
+  }
 }
 
-// mousePressed() function is called once after every time a mouse button is pressed
 function mousePressed() {
-    // code to run when mouse is pressed
+  ripples.push({
+    x: mouseX,
+    y: mouseY,
+    radius: 10,
+    alpha: 150
+  });
+}
+
+function backTile(g) {
+  //set tile grout
+  g.colorMode(HSB, 360, 100, 100); //HSB color mode
+  g.stroke(180, 30, 95); //grout color
+  //g.stroke(159, 238, 245);
+  g.strokeWeight(1);
+  
+  for (let i = 0; i < width/10; i++){
+    for (let j = 0; j < height/10; j++){
+      //set tile color
+      // Random turquoise hues
+      let h = random(175, 190);     // cyan-blue range
+      let s = random(70, 100);      // high saturation
+      let b = random(75, 85);      // bright
+      g.fill(h, s, b);
+      
+      //draw tile
+      g.rect(i * 40, j * 40, 40, 40);
+      
+    }
+  }
+  g.colorMode(RGB, 255);
+}
+
+function lineAmt() {
+  let cols = width/80;
+  let rows = height/75;
+  let spacingX = width / cols;
+  let spacingY = height / rows;
+  //jitter grid for even spacing
+  for (let i = -cols; i <= cols; i++) {
+    for (let j = -rows; j <= rows; j++) {
+      let x = i * spacingX + random(-spacingX * 0.3, spacingX * 0.3);
+      let y = j * spacingY + random(-spacingY * 0.3, spacingY * 0.3);
+      let size = random(50, 60);
+
+      whiteLines(x, y, size);
+      lightLines.push({x, y, size});
+    }
+  }
+}
+
+function whiteLines(x, y, size = 40, complexity = 6) {
+  // shadow effect (dark gray shadow)
+  let shadowOffset = 3;  
+  stroke(50, 50, 50, 75);  // Dark gray color for shadow
+  strokeWeight(random(2, 5));
+  
+  // draw shadow (slightly offset from the original position)
+  beginShape();
+  for (let i = 0; i < complexity; i++) {
+    let angle = map(i, 0, complexity, 0, TWO_PI);
+    let radius = size + random(-10, 10); // irregularity
+    let px = x + cos(angle) * radius + shadowOffset; 
+    let py = y + sin(angle) * radius + shadowOffset;
+    vertex(px, py);
+  }
+  endShape(CLOSE);
+  
+  
+  //set white stroke no fill
+  noFill();
+  stroke(255, 255, 255, random(200, 255));
+  strokeWeight(random(2, 5));
+  
+  beginShape();
+  
+  //random shape
+  for (let i = 0; i < complexity; i++) {
+    let angle = map(i, 0, complexity, 0, TWO_PI);
+    let radius = size + random(-10, 10); // irregularity
+    let px = x + cos(angle) * radius;
+    let py = y + sin(angle) * radius;
+    vertex(px, py);
+  }
+  
+  endShape(CLOSE);
 }

@@ -22,8 +22,6 @@
 
 	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
     <script type="text/javascript" src="../js/site.js" DEFER></script>
-	<!-- Use me for a JavaScript OOP Project -->
-	<script type="text/javascript" src="./js/project.js" DEFER></script>
 	<!-- Use me for a p5.js project -->
 	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
 </head>
@@ -32,7 +30,7 @@
 	<main id="content">
 		<section>
 
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1>Experiment 02 - Living Impressions</h1>
 
 			<div class="minor-section">
 				<div id="canvas-container">
@@ -45,17 +43,20 @@
 
 			<div class="minor-section">
 				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+				<p>I am not deeply interested in the typical landscape image as I do see the beauty in it but it is not interesting to me. I grew up as a competitive swimmer for my whole life and while there are many beautiful natural bodies of water in the world, I feel closer to home in the average man-made pool with brightly colored tiles. Not only that, I chose to work with water because there are many possible shapes and movements that water makes to the slightest touch. 
+
+					What I intended on doing was creating a range of blue colors that will randomly generate a grid to mimic the tiles at the bottom of a pool and use white lines that will drift back and forth to create the impression of water moving with time. I didn't want to have excessive user input due to the reactivity of water so instead of creating an effect simply based on mouse movement, I wanted to write a script that will cause a ripple in the water where the user clicks on the image. I also made small details like the white grout lines between each tile and a shadow of the white water lines on the bottom of the pool.
+					</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<p>I used HSB values to generate random shades of turquoise tiles within a range and with consistent grout colors. I made this into a graphic that would not be affected by the drifting animation of the water lines. I also wrote a function that would randomly generate polygons on a grid with some jitter to make them seem more natural in order to create the white lines on the surface of the water. Using this function, I also created the shadow from the lines on the bottom of the pool. These lines drift using a sin curve to give the impression of water. The water ripple is fairly simple and is just an ellipse that grows in size and lowers in alpha in order to create the perception of a ripple in water that fades over time and I used the built in mousePressed function to trigger it.</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+				<p>I worked on this entire project by myself and referenced the p5.js documentation to figure out some issues I had. I am fairly proud of my work and my project is a reflection of how important final touches and juice are to a project. Small things like the grout lines, shadows on the tile, and using the correct color values created a very cohesive and understandable image. The last touches in the Innovate stage changed the image completely and made it clear what I was looking at. Throughout the project, I found myself frustrated with the appearance of the image and knew that it did not look like a pool but I can say with confidence that it does now. I struggled a lot with the ripple effect as all of the references I found online were very impressive but utilized shaders which were difficult for me to learn and implement so I settled for a simpler illusion of a ripple instead of real image distortion using shaders. All in all, this was a nice learning experience which forced me to be flexible and innovative.</p>
 			</div>
 
 		</section>
