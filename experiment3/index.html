@@ -22,21 +22,42 @@
 
 	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
     <script type="text/javascript" src="../js/site.js" DEFER></script>
-	<!-- Use me for a JavaScript OOP Project -->
-	<script type="text/javascript" src="./js/project.js" DEFER></script>
-	<!-- Use me for a p5.js project -->
-	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+	<!-- dungeon generator -->
+	<script type="text/javascript" src="./js/p2_solution_dungeon.js" DEFER></script>
+	<script type="text/javascript" src="./js/base_dungeon.js" DEFER></script>
+	<!-- overworld generator -->
+	<script type="text/javascript" src="./js/p2_solution_overworld.js" DEFER></script>
+	<script type="text/javascript" src="./js/base_overworld.js" DEFER></script>
 </head>
 <body>
 	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
 	<main id="content">
 		<section>
 
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1>Experiment 03 - Alternate Worlds</h1>
 
 			<div class="minor-section">
-				<div id="canvas-container">
+				<div id="canvas-containerD">
 					<!-- canvas will be added here -->
+					<button id="reseedButtonD">
+					reseed
+					</button>
+					<span id="seedReportD"></span>
+					<hr />
+					<span id="canvasContainerD" style="margin: 10px;"></span>
+					<textarea cols="30" rows="35" id="asciiBoxD" style="opacity: 0.5; letter-spacing: 1ex; width: 320px; margin: 10px; font-family: monospace;"></textarea>
+				
+				</div>
+				<div id="canvas-containerO">
+					<!-- canvas will be added here -->
+					<button id="reseedButtonO">
+					reseed
+					</button>
+					<span id="seedReportO"></span>
+					<hr />
+					<span id="canvasContainerO" style="margin: 10px;"></span>
+					<textarea cols="30" rows="35" id="asciiBoxO" style="opacity: 0.5; letter-spacing: 1ex; width: 320px; margin: 10px; font-family: monospace;"></textarea>
+				
 				</div>
                 <div class="fullscreen-box">
                     <button id="fullscreen">Fullscreen</button>
