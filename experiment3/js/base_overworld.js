@@ -13,10 +13,10 @@ let canvasContainer;
 var centerHorz, centerVert;
 
 function resizeScreen() {
-  centerHorz = width / 2; // Adjusted for drawing logic
-  centerVert = height / 2; // Adjusted for drawing logic
+  centerHorz = p.width / 2; // Adjusted for drawing logic
+  centerVert = p.height / 2; // Adjusted for drawing logic
   console.log("Resizing...");
-  resizeCanvas(width, height);
+  p.resizeCanvas(p.width, p.height);
   // redrawCanvas(); // Redraw everything based on new size
 }
 
@@ -28,9 +28,11 @@ let seed = 0;
 let tilesetImage;
 let currentGrid = [];
 let numRows, numCols;
+let cloudGraphic;
+let cloudOffsetX = 0;
 
 p.preload = function() {
-  tilesetImage = loadImage(
+  tilesetImage = p.loadImage(
     "https://cdn.glitch.com/25101045-29e2-407a-894c-e0243cd8c7c6%2Ftileset.png?v=1611654020438"
   );
 }
@@ -81,6 +83,7 @@ p.setup = function() {
   canvasContainer = p.select("#canvasContainerO");
 
   p.createCanvas(16 * numCols, 16 * numRows).parent("canvasContainerO");
+  cloudGraphic = p.createGraphics(p.width, p.height);
   p.select("canvas").elt.getContext("2d").imageSmoothingEnabled = false;
 
   p.select("#reseedButtonO").mousePressed(reseed);
@@ -96,12 +99,43 @@ p.setup = function() {
 
 
 p.draw = function() {
-  randomSeed(seed);
+    p.randomSeed(seed);
   drawGrid(currentGrid);
+  cloudAnim();
 }
 
 function placeTile(i, j, ti, tj) {
     p.image(tilesetImage, 16 * j, 16 * i, 16, 16, 8 * ti, 8 * tj, 8, 8);
+}
+
+function cloudAnim() {
+    cloudOffsetX += 0.2; // Speed of cloud drift
+
+    cloudGraphic.clear(); // Clear the buffer
+    cloudGraphic.noStroke();
+    cloudGraphic.fill(255, 255, 255, 50); // soft white
+
+    // Layered cloud passes
+    const layers = [
+        { scale: 0.004, alpha: 20, offsetMult: 0.5, size: 25 },
+        { scale: 0.006, alpha: 50, offsetMult: 1.5, size: 18 }
+    ];
+
+    for (let layer of layers) {
+        for (let y = 0; y < p.height; y += 10) {
+            for (let x = 0; x < p.width; x += 10) {
+                let n = p.noise(
+                (x + cloudOffsetX * layer.offsetMult) * layer.scale,
+                y * layer.scale
+                );
+                if (n > 0.5) {
+                    cloudGraphic.fill(255, 255, 255, layer.alpha);
+                    cloudGraphic.ellipse(x, y, layer.size, layer.size * 0.75);
+                }
+            }
+        }
+    }
+    p.image(cloudGraphic, 0, 0);
 }
 
 /* exported generateGrid, drawGrid */
@@ -197,11 +231,11 @@ function generateGrid(numCols, numRows) {
       for(let j = 0; j < grid[i].length; j++) {
         //grass
         if (grid[i][j] == 'G') {
-          placeTile(i, j, (floor(random(4))), 0);
+          placeTile(i, j, (p.floor(p.random(4))), 0);
         }
         //WATER
         if (gridCheck(grid, i, j, "W")) {
-          placeTile(i, j, (floor(random(4))), 13);
+          placeTile(i, j, (p.floor(p.random(4))), 13);
           drawContext(grid, i, j, "G", 9, 0);
           drawContext(grid, i, j, "H", 9, 0);
           drawContext(grid, i, j, "T", 9, 0);
@@ -209,20 +243,21 @@ function generateGrid(numCols, numRows) {
 
         //rocks tile
         if (gridCheck(grid, i, j, "R")) {
-            placeTile(i, j, (floor(random(4))), 13);
+            placeTile(i, j, (p.floor(p.random(4))), 13);
             placeTile(i, j, 14, 9);
         }
 
         //house tile
         if (gridCheck(grid, i, j, "H")) {
-            placeTile(i, j, 26, floor(random(4)));
+            placeTile(i, j, (p.floor(p.random(4))), 0);
+            placeTile(i, j, 26, p.floor(p.random(4)));
             
         }
 
         //tree tile
         if (gridCheck(grid, i, j, "T")) {
-            placeTile(i, j, (floor(random(4))), 0);
-            placeTile(i, j, 14, random([0, 6, 15]));
+            placeTile(i, j, (p.floor(p.random(4))), 0);
+            placeTile(i, j, 14, p.random([0, 6, 15]));
         }
         
         /*if(grid[i][j] == '.'){

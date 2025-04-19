@@ -7,16 +7,16 @@
 
 // Constants - User-servicable parts
 // In a longer project I like to put these in a separate file
-(function() {
+new p5(function(p) {
 // Globals
 let canvasContainer;
 var centerHorz, centerVert;
 
 function resizeScreen() {
-  centerHorz = width / 2; // Adjusted for drawing logic
-  centerVert = height / 2; // Adjusted for drawing logic
+  centerHorz = p.width / 2; // Adjusted for drawing logic
+  centerVert = p.height / 2; // Adjusted for drawing logic
   console.log("Resizing...");
-  resizeCanvas(width, height);
+  p.resizeCanvas(p.width, p.height);
   // redrawCanvas(); // Redraw everything based on new size
 }
 
@@ -32,27 +32,27 @@ let numRows, numCols;
 //vignette graphic variable
 let vignetteGraphics;
 
-window.preload = function() {
-  tilesetImage = loadImage(
+p.preload = function() {
+  tilesetImage = p.loadImage(
     "https://cdn.glitch.com/25101045-29e2-407a-894c-e0243cd8c7c6%2Ftileset.png?v=1611654020438"
   );
 }
 
 function reseed() {
   seed = (seed | 0) + 1109;
-  randomSeed(seed);
-  noiseSeed(seed);
-  select("#seedReportD").html("seed " + seed);
+  p.randomSeed(seed);
+  p.noiseSeed(seed);
+  p.select("#seedReportD").html("seed " + seed);
   regenerateGrid();
 }
 
 function regenerateGrid() {
-  select("#asciiBoxD").value(gridToString(generateGrid(numCols, numRows)));
+  p.select("#asciiBoxD").value(gridToString(generateGrid(numCols, numRows)));
   reparseGrid();
 }
 
 function reparseGrid() {
-  currentGrid = stringToGrid(select("#asciiBoxD").value());
+  currentGrid = stringToGrid(p.select("#asciiBoxD").value());
 }
 
 function gridToString(grid) {
@@ -77,18 +77,18 @@ function stringToGrid(str) {
   return grid;
 }
 
-window.setup = function() {
-  numCols = select("#asciiBoxD").attribute("rows") | 0;
-  numRows = select("#asciiBoxD").attribute("cols") | 0;
+p.setup = function() {
+  numCols = p.select("#asciiBoxD").attribute("rows") | 0;
+  numRows = p.select("#asciiBoxD").attribute("cols") | 0;
 
-  canvasContainer = select("#canvasContainerD");
+  canvasContainer = p.select("#canvasContainerD");
 
-  createCanvas(16 * numCols, 16 * numRows).parent("canvasContainerD");
-  vignetteGraphics = createGraphics(width, height);
-  select("canvas").elt.getContext("2d").imageSmoothingEnabled = false;
+  p.createCanvas(16 * numCols, 16 * numRows).parent("canvasContainerD");
+  vignetteGraphics = p.createGraphics(p.width, p.height);
+  p.select("canvas").elt.getContext("2d").imageSmoothingEnabled = false;
 
-  select("#reseedButtonD").mousePressed(reseed);
-  select("#asciiBoxD").input(reparseGrid);
+  p.select("#reseedButtonD").mousePressed(reseed);
+  p.select("#asciiBoxD").input(reparseGrid);
 
   reseed();
 
@@ -99,8 +99,8 @@ window.setup = function() {
 }
 
 
-window.draw = function() {
-  randomSeed(seed);
+p.draw = function() {
+  p.randomSeed(seed);
   drawGrid(currentGrid);
 
   //run drawVignette to animate drifting vignette
@@ -108,7 +108,7 @@ window.draw = function() {
 }
 
 function placeTile(i, j, ti, tj) {
-  image(tilesetImage, 16 * j, 16 * i, 16, 16, 8 * ti, 8 * tj, 8, 8);
+  p.image(tilesetImage, 16 * j, 16 * i, 16, 16, 8 * ti, 8 * tj, 8, 8);
 }
 
 function drawVignette() {
@@ -119,9 +119,9 @@ function drawVignette() {
   let h = vignetteGraphics.height;
 
   //perlin noise movement based on time
-  let time = millis();
-  let offsetX = noise(time * 0.0005) * 100 - 50;
-  let offsetY = noise(time * 0.0005 + 100) * 100 - 50;
+  let time = p.millis();
+  let offsetX = p.noise(time * 0.0005) * 100 - 50;
+  let offsetY = p.noise(time * 0.0005 + 100) * 100 - 50;
 
   //changing alpha value of pixels depending on distance to center
   for (let x = 0; x < w; x++) {
@@ -130,8 +130,8 @@ function drawVignette() {
       let dy = (y - h / 2 + offsetY) / (h / 2);
       let dSQ = dx * dx + dy * dy;
 
-      let alpha = map(dSQ, 0.4, 1.0, 0, 150);
-      alpha = constrain(alpha, 0, 150);
+      let alpha = p.map(dSQ, 0.4, 1.0, 0, 150);
+      alpha = p.constrain(alpha, 0, 150);
 
       for (let i = 0; i < d; i++) {
         for (let j = 0; j < d; j++) {
@@ -146,7 +146,7 @@ function drawVignette() {
   }
 
   vignetteGraphics.updatePixels();
-  image(vignetteGraphics, 0, 0);
+  p.image(vignetteGraphics, 0, 0);
 }
 
 /* exported generateGrid, drawGrid */
@@ -164,16 +164,16 @@ function generateGrid(numCols, numRows) {
   
   //room restrictions
   let rooms = [];
-  let roomNum = 7;
+  let roomNum = 10;
   let minRoomSize = 2;
-  let maxRoomSize = 8;
+  let maxRoomSize = 10;
   
   //random rooms
   for (let i = 0; i < roomNum; i++) {
-    let w = Math.floor(random(minRoomSize, maxRoomSize));
-    let h = Math.floor(random(minRoomSize, maxRoomSize));
-    let x = Math.floor(random(0, numCols - w));
-    let y = Math.floor(random(0, numRows - h));
+    let w = Math.floor(p.random(minRoomSize, maxRoomSize));
+    let h = Math.floor(p.random(minRoomSize, maxRoomSize));
+    let x = Math.floor(p.random(0, numCols - w));
+    let y = Math.floor(p.random(0, numRows - h));
     
     //make and store room in array
     for (let s = y; s < y + h; s++) {
@@ -185,9 +185,9 @@ function generateGrid(numCols, numRows) {
     rooms.push({x: x + Math.floor(w / 2), y: y + Math.floor(h / 2) });
   
       // add a chest randomly in the rooms
-      if (random() < 0.5) {
-          let chestX = Math.floor(random(x + 1, x + w - 1));
-          let chestY = Math.floor(random(y + 1, y + h - 1));
+      if (p.random() < 0.5) {
+          let chestX = Math.floor(p.random(x + 1, x + w - 1));
+          let chestY = Math.floor(p.random(y + 1, y + h - 1));
           grid[chestY][chestX] = "C";
       }
   }
@@ -207,11 +207,11 @@ function generateGrid(numCols, numRows) {
     }
   }
   //random generate towers
-  for (let h = 0; h < random(3, 20); h++) {
+  for (let h = 0; h < p.random(3, 20); h++) {
       let placed = false;
       while (!placed) {
-          let x = Math.floor(random(grid.length));
-          let y = Math.floor(random(grid[0].length));
+          let x = Math.floor(p.random(grid.length));
+          let y = Math.floor(p.random(grid[0].length));
 
           if (grid[x][y] === "S") {
               grid[x][y] = "T";
@@ -224,17 +224,17 @@ function generateGrid(numCols, numRows) {
 }
 
 function drawGrid(grid) {
-  background(128);
+  p.background(128);
 
   for(let i = 0; i < grid.length; i++) {
     for(let j = 0; j < grid[i].length; j++) {
       //grass
       if (grid[i][j] == 'S') {
-        placeTile(i, j, (floor(random(4))), 12);
+        placeTile(i, j, (p.floor(p.random(4))), 12);
       }
       //room
       if (gridCheck(grid, i, j, "D")) {
-        placeTile(i, j, (floor(random(11, 14))), (floor(random(22, 25))));
+        placeTile(i, j, (p.floor(p.random(11, 14))), (p.floor(p.random(22, 25))));
         drawContext(grid, i, j, "S", 9, 12);
         drawContext(grid, i, j, "T", 9, 12);
       }
@@ -246,15 +246,15 @@ function drawGrid(grid) {
 
       //chest tile
       if (gridCheck(grid, i, j, "C")) {
-        placeTile(i, j, (floor(random(11, 14))), (floor(random(22, 25))));
-        placeTile(i, j, floor(random(3, 5)), floor(random(28, 30)));
+        placeTile(i, j, (p.floor(p.random(11, 14))), (p.floor(p.random(22, 25))));
+        placeTile(i, j, p.floor(p.random(3, 5)), p.floor(p.random(28, 30)));
       }
 
       //tower tile
       if (gridCheck(grid, i, j, "T")) {
-        let yTile = random([1, 3]);
-        let xTile = floor(random(28, 30));
-        placeTile(i, j, (floor(random(4))), 12);
+        let yTile = p.random([1, 3]);
+        let xTile = p.floor(p.random(28, 30));
+        placeTile(i, j, (p.floor(p.random(4))), 12);
         placeTile(i, j, xTile, yTile);
         if ((i-1) != null) {
             placeTile(i-1, j, xTile, yTile-1);
@@ -358,4 +358,4 @@ const lookup = [
   [1, 1]
 ];
 
-})();
+});
