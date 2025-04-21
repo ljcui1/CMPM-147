@@ -65,17 +65,18 @@
 
 			<div class="minor-section">
 				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+				<p>This project is actually 2 separate p5.js projects that are making a dungeon and overworld generator respectively. The dungeon generator has a moving vignette for a creepy effect while the overworld generator has clouds moving across the screen as if the user was looking at the biome from top-down. The dungeon generator has a snowy and barren aesthetic with a dark dungeon between the snow with paths connecting them. There are also dungeon towers in the snow. The overworld generator has ponds and rocks scattered around the biome as well as clusters of trees and some homes littered around too.
+				</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<p>This project is made with an ascii grid that is representing the positions of tiles placed at different ascii values.</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+				<p>I worked on this project by myself with some math assistance with online sources and ChatGPT as well as the tileset being made by someone else. I’m overall happy with how this project turned out and the tileset already being very cute helped a lot. I struggled a lot with implementing the autotiling logic as I kept having an issue with the tiles having a gap between the room and the borders but I eventually rewrote my lookup[] array and reversed the logic so that the borders are placed based on the room tiles and not the tiles around it. Once that was fixed, creating the overworld generator was very fun and allowed me to be a little more creative. The implementation of the two generators on one page was very difficult and I ended up having to turn each file into a new p5 instance for them to run on the same page without referencing each other. That was a bit tedious but ultimately worth it.</p>
 			</div>
 
 		</section>
