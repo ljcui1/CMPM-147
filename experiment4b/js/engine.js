@@ -82,7 +82,7 @@ function setup() {
     rebuildWorld(input.value());
   });
 
-  createP("WASD moves character. SpaceBar jumps.").parent("canvas-container");
+  createP("WASD moves character.").parent("canvas-container");
 
   rebuildWorld(input.value());
 }
