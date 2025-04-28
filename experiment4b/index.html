@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- This title is used for tabs and bookmarks -->
+	<title>Experiment X - Subject/Topic</title>
+
+	<!-- Use UTF character set, a good idea with any webpage -->
+	<meta charset="UTF-8" />
+	<!-- Set viewport so page remains consistently scaled w narrow devices -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
+	<link rel="stylesheet" type="text/css" href="../css/site.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- Load jQuery library -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+	<!-- Load p5.js library -->
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+
+	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
+    <script type="text/javascript" src="../js/site.js" DEFER></script>
+	<!-- Use me for a p5.js project -->
+	<script type="text/javascript" src="./js/xxhash.min.js" DEFER></script>
+	<script type="text/javascript" src="./js/engine.js" DEFER></script>
+	<script type="text/javascript" src="./js/my_world.js" DEFER></script>
+</head>
+<body>
+	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
+	<main id="content">
+		<section>
+
+			<h1>Experiment 02 - Living Impressions</h1>
+
+			<div class="minor-section">
+				<div id="canvas-container">
+					<!-- canvas will be added here -->
+				</div>
+                <div class="fullscreen-box">
+                    <button id="fullscreen">Fullscreen</button>
+                </div>
+			</div>
+
+			<div class="minor-section">
+				<h2>Description</h2>
+				<p>These three generators center around Conway’s Game of Life but all have separate functionality and the way users interact with each generation varies dramatically. The first generator is just a visual representation of Conway’s Game of Life on an infinite and isometric plane that allows users to add living cells themselves. This generator also expresses the clusters of living cells with height and a color gradient. The other two generators are both more interactive and gamified visualizations. The second generator is an endless runner with obstacles that user’s must avoid and traverse between using the WASD key controls before the moving camera catches up to them. A similar consequence is posed in the third generator where WASD movement is still offered but with the added feature of jumping and the game mechanic of jumping atop platforms instead of avoiding the raised tiles. All of these generators are affected by the world key that can be inputted by the player but also repeatable if the same world key is inputted.</p>
+				<p>Infinity: This project extends infinitely in one direction (top left corner).
+					Variation in Space: There are colored grey raised tiles that represent obstacles
+					and grey non-raised tiles are warnings to the player. There is also a moveable blue dot for the player.
+					Variation in Key: The starting generation and player spawn position relies on a replicable world key.
+					Signs of Life: The project camera moves constantly throughout the playtime and the user can use WASD to
+					navigate the infinitely generated Game of Life obstacle course.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Technical</h2>
+				<p>I used HSB values to generate random shades of turquoise tiles within a range and with consistent grout colors. I made this into a graphic that would not be affected by the drifting animation of the water lines. I also wrote a function that would randomly generate polygons on a grid with some jitter to make them seem more natural in order to create the white lines on the surface of the water. Using this function, I also created the shadow from the lines on the bottom of the pool. These lines drift using a sin curve to give the impression of water. The water ripple is fairly simple and is just an ellipse that grows in size and lowers in alpha in order to create the perception of a ripple in water that fades over time and I used the built in mousePressed function to trigger it.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Reflection</h2>
+				<p>I worked on this entire project by myself and referenced the p5.js documentation to figure out some issues I had. I am fairly proud of my work and my project is a reflection of how important final touches and juice are to a project. Small things like the grout lines, shadows on the tile, and using the correct color values created a very cohesive and understandable image. The last touches in the Innovate stage changed the image completely and made it clear what I was looking at. Throughout the project, I found myself frustrated with the appearance of the image and knew that it did not look like a pool but I can say with confidence that it does now. I struggled a lot with the ripple effect as all of the references I found online were very impressive but utilized shaders which were difficult for me to learn and implement so I settled for a simpler illusion of a ripple instead of real image distortion using shaders. All in all, this was a nice learning experience which forced me to be flexible and innovative.</p>
+			</div>
+
+		</section>
+		<nav id="links" class="minor-section">
+			<!-- Put link back to homepage here. -->
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+            </ul>
+		</nav>
+	</main>
+</body>
+</html>
