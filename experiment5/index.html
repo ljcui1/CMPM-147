@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- This title is used for tabs and bookmarks -->
+	<title>Experiment X - Subject/Topic</title>
+
+	<!-- Use UTF character set, a good idea with any webpage -->
+	<meta charset="UTF-8" />
+	<!-- Set viewport so page remains consistently scaled w narrow devices -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
+	<link rel="stylesheet" type="text/css" href="../css/site.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- Load jQuery library -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+	<!-- Load p5.js library -->
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+
+	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
+    <script type="text/javascript" src="../js/site.js" DEFER></script>
+	<!-- Use me for a p5.js project -->
+	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+	<script type="text/javascript" src="./js/my_design.js" DEFER></script>
+</head>
+<body>
+	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
+	<main id="content">
+		<section>
+
+			<h1>Experiment 05 - Evolutionary Impressions</h1>
+
+			<div class="minor-section">
+				<div id="canvas-container">
+					<!-- canvas will be added here -->
+					<select id="dropper"></select>
+					<button id="restart">
+					  restart
+					</button>
+					<p>
+					  Mutation rate (<span id="rate"></span>%):<br /><input
+						id="slider"
+						type="range"
+						min="1"
+						max="100"
+						value="100"
+					  />
+					</p>
+					<p id="active"></p>
+					<p>Active score: <span id="activeScore"></span></p>
+					<p>Exploration rate: <span id="fpsCounter"></span> fps</p>
+					<p id="best"></p>
+					<p>Best score: <span id="bestScore"></span></p>
+					<p id="memory" data-max-items="16"></p>
+				</div>
+                <div class="fullscreen-box">
+                    <button id="fullscreen">Fullscreen</button>
+                </div>
+			</div>
+
+			<div class="minor-section">
+				<h2>Description</h2>
+				<p>This generator renders 3 specific images using p5.js's built in drawing tools to create a random interpretation of the original images. The images being specific means that color is picked from the original image. There is a dropdown menu that allows users to select which image they want to mutate. After initial rendering, the generator takes various values including the rate of mutation which is dictated by the user via slider input to mutate the colors, shapes, and positions of elements in the image.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Technical</h2>
+				<p>This project uses p5.js to define colors for each individual image and randomly instantiate rectangles and ellipses onto the canvas. The canvas size is defined by scaling the original image size depending on how big or small the image is. There is a mutation function that calls a randomGaussian on all of the individually drawn parts of the generated image.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Reflection</h2>
+				<p>I worked on this project by myself but with significant help from the instructional slides and example project provided by Wes Modes. I didn’t see until the end of working on the project that it was suggested not to mess with color until later but I had already done so. I felt quite proud of myself that I managed to figure out an optimal way to implement color with a certain level of control. I was initially confused by the project goals as it wasn’t immediately clear to me what we were doing in each step but using the resources provided by Wes Modes made this project a lot more understandable and doable for me. I struggled a lot with trying to use perlin noise to create a slight jitter in the saturation and brightness values because all of the colors started off as the same exact ones that were initially listed and I wanted some level of natural variation. This was difficult because no matter what I did, the HSB color mode seemed to be permanently and dramatically altering my project even after changing the color mode back to RGB. After moving onto the image mutation functions, I found that this struggle with the color modes was not necessary as the mutations ended up yielding the exact results I had wanted. I also was quite proud of myself for figuring out that the alpha value was not being considered when fill() was called because it was not considered part of the RGB array that fill() was taking. Simply pushing the alpha value into the array made a very visually appealing transparency variation. Overall, this was an initially confusing but interesting experience for me and I know that I have a lot to learn about color manipulation.</p>
+			</div>
+
+		</section>
+		<nav id="links" class="minor-section">
+			<!-- Put link back to homepage here. -->
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+            </ul>
+		</nav>
+	</main>
+</body>
+</html>
